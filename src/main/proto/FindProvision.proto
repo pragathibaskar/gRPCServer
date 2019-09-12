@@ -1,0 +1,29 @@
+syntax = "proto3";
+package com.cg.grpc;
+option java_multiple_files = true;
+
+message FindProvision {
+ int64 timestamp = 1;
+ int32 page = 2;
+ int32 size = 3;
+
+}
+
+message GetResults {
+	string codigo = 1;
+	string cod_socieded = 2;
+	int64 timestamp = 3;
+}
+
+message GetPage {
+	repeated GetResults result= 1;
+	int32 totalelements = 2;
+
+	}
+
+
+
+
+service Fetchservice {
+	rpc fetch(FindProvision) returns (GetPage);
+}
