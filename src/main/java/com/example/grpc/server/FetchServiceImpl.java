@@ -1,5 +1,6 @@
 package com.example.grpc.server;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -28,18 +29,19 @@ public class FetchServiceImpl extends FetchserviceImplBase {
 	public void fetch(FindProvision request, StreamObserver<GetPage> response) {
 
 		Date date = new Date(request.getTimestamp());
-		System.out.println("Request Payload\n"+"Date : "+new Date(request.getTimestamp()));
-		System.out.println("Requested time\n"+new Date());
+		String format = "yyyy-MM-dd HH:mm:ss";
+		SimpleDateFormat formatter = new SimpleDateFormat(format);
+		
+		
+		System.out.println(formatter.format(new Date())+", "+"Request, "+request.getTimestamp());
 		Pageable listAll = null;
 		listAll = PageRequest.of(request.getPage(), request.getSize(), Sort.by("codigo_sap_expediente").ascending());
 		Page<Provision> pg = db.findByPeriodo(date, listAll);
-		//System.out.println("Inside Response-breakpoint page response" + pg);
 		int totalelements = (int) pg.getTotalElements();
-		//System.out.println("Inside Response-breakpoint total elements" + totalelements);
 		List<Provision> list = pg.getContent();
 
 		GetPage.Builder build = GetPage.newBuilder();
-		System.out.println("Respone ");
+		System.out.println(formatter.format(new Date())+", "+"Response, ");
 		System.out.println("codigo_sap_expediente values with cod_sociedad");
 		for (int i = 0; i < list.size(); i++) {
 			
