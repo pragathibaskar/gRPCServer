@@ -28,8 +28,8 @@ public class FetchServiceImpl extends FetchserviceImplBase {
 	public void fetch(FindProvision request, StreamObserver<GetPage> response) {
 
 		Date date = new Date(request.getTimestamp());
-		System.out.println("Request Payload/n"+"Date : "+request.getTimestamp());
-		System.out.println("Requested time/n"+new Date());
+		System.out.println("Request Payload\n"+"Date : "+request.getTimestamp());
+		System.out.println("Requested time\n"+new Date());
 		Pageable listAll = null;
 		listAll = PageRequest.of(request.getPage(), request.getSize(), Sort.by("codigo_sap_expediente").ascending());
 		Page<Provision> pg = db.findByPeriodo(date, listAll);
